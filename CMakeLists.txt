@@ -17,12 +17,14 @@ set(HEADER_FILES
 
 # Add source files
 set(SOURCE_FILES
-    src/main.cpp
     src/json.cpp
 )
 
 # Create the executable
-add_executable(CPP-JSON ${SOURCE_FILES})
+
+
+# Create the library
+add_library(CPP-JSON SHARED ${SOURCE_FILES} ${HEADER_FILES})
 
 # Include directories for headers
 target_include_directories(CPP-JSON PRIVATE headers)

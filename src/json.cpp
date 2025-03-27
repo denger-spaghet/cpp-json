@@ -8,6 +8,10 @@ void JsonValue::StringValue::print() const {
     std::cout << "\"" << m_value << "\""; 
 }
 
+std::string JsonValue::StringValue::toString() const {
+    return m_value;
+}
+
 JsonValue::ObjectValue::ObjectValue(const JsonObject& obj):
     m_value { std::make_shared<JsonObject>(obj) } {}
 
@@ -15,6 +19,9 @@ void JsonValue::ObjectValue::print() const {
     m_value->print();
 }
 
+std::string JsonValue::ObjectValue::toString() const {
+    return m_value->toString();
+}
 
 JsonValue::JsonValue() : m_value { nullptr } {}
 
@@ -49,6 +56,11 @@ void JsonValue::print() const {
     else std::cout << "null";
 }
 
+std::string JsonValue::toString() const{
+    if(m_value) return m_value->toString();
+    else return "null";
+}
+
 void JsonObject::add(const std::string& key, const JsonValue& value) {
     m_data[key] = value;
 }
@@ -69,4 +81,15 @@ void JsonObject::print() const {
         if(std::next(it) != m_data.end()) std::cout << ", ";
     }
     std::cout << "}";
+}
+
+std::string JsonObject::toString() const {
+    std::string ret { "{" };
+    for(auto it = m_data.begin(); it != m_data.end(); ++it) {
+        ret += "\"" + it->first + "\": ";
+        ret += it->second.toString();
+        if(std::next(it) != m_data.end())  ret += ", ";
+    }
+    ret += "}";
+    return ret;
 }

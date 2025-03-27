@@ -9,6 +9,7 @@ int main() {
     inner.add("three", JsonValue{ "three" });
     obj.add("two", inner);
 
-    obj.print();
+    std::string test {obj.toString()};
+    std::cout << test << "\n";
     return 0;
 }
